@@ -162,5 +162,26 @@ namespace SeekableStreamTests
                 Assert.IsTrue(buffer.SequenceEqual(Encoding.ASCII.GetBytes("765")));
             }
         }
+
+        [TestMethod]
+        public void ReadFromEndWithOffset()
+        {
+            var haystackByteArray = Encoding.ASCII.GetBytes("1234567");
+            var buffer = new byte[10];
+
+            using (var memStream = new MemoryStream(haystackByteArray))
+            using(var seekableStream = new SearchableStream(memStream))
+            {
+                seekableStream.Seek(0, SeekOrigin.End);
+                // Act
+                seekableStream.ReadBackwards(buffer, 7, 3);
+
+                // Assert
+                var expectedBytes = (new byte[7]).ToList();
+                expectedBytes.AddRange(Encoding.ASCII.GetBytes("765"));
+
+                Assert.IsTrue(buffer.SequenceEqual(expectedBytes));
+            }
+        }
     }
 }
