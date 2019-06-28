@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AiKismet.SearchableStream.UnitTests", "AiKismet.SearchableStream.UnitTests\AiKismet.SearchableStream.UnitTests.csproj", "{25B25183-8240-47B9-8EA6-C0A9C4E0B909}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "info", "info", "{99C8066E-073E-43CC-B357-EEDAB78E0F55}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
