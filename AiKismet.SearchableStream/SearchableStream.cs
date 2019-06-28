@@ -39,7 +39,23 @@ namespace AiKismet.SearchableStream
 
         public void ReadBackwards(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
+            if (buffer == null)
+                throw new ArgumentNullException(nameof(buffer), "Buffer passed in cannot null");
+
+            if (_stream.Position - count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count), "Count of read is larger than there is left to read in stream.");
+
+            if (count > buffer.Length - offset)
+                throw new ArgumentOutOfRangeException(nameof(count), "Count of read is larger than the buffer minus the offset.");
+
+            // To make it work similary as Read (forward) we need to go back one so we are reading the previous byte and not the current byte that wea re on.
+            _stream.Position -= 1;
+
+            for (var i = 0; i < count; i++)
+            {
+                buffer[offset + i] = (byte)_stream.ReadByte();
+                _stream.Position -= Math.Min(_stream.Position, 2);
+            }
         }
 
         /// <summary>
@@ -105,9 +121,7 @@ namespace AiKismet.SearchableStream
 
 
         public override long Seek(long offset, SeekOrigin origin)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Seek(offset, origin);
 
         public override void SetLength(long value)
         {
