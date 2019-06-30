@@ -50,6 +50,7 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(emptyByteArray))
             using(var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
                 var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
@@ -68,6 +69,8 @@ namespace SeekableStreamTests
             using(var memStream = new MemoryStream(haystackByteArray))
             using(var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
+
                 // Act
                 var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
@@ -86,6 +89,8 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
+
                 // Act
                 var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
@@ -105,6 +110,7 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
                 var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
@@ -124,6 +130,7 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
                 var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
@@ -145,6 +152,7 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
                 var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray, 2);
 
