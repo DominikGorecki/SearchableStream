@@ -8,7 +8,7 @@ using System.Text;
 namespace SeekableStreamTests
 {
     [TestClass]
-    public class LastIndexOfAll
+    public class IndexOfAllBackwards 
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
