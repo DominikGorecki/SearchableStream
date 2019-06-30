@@ -183,5 +183,27 @@ namespace SeekableStreamTests
                 Assert.IsTrue(buffer.SequenceEqual(expectedBytes));
             }
         }
+
+        [TestMethod]
+        public void ReadFromMiddle()
+        {
+            var haystackByteArray = Encoding.ASCII.GetBytes("12345678");
+            var buffer = new byte[10];
+
+            using (var memStream = new MemoryStream(haystackByteArray))
+            using(var seekableStream = new SearchableStream(memStream))
+            {
+                seekableStream.Seek(3, SeekOrigin.Begin);
+                // Act
+                seekableStream.ReadBackwards(buffer, 7, 3);
+
+                // Assert
+                var expectedBytes = (new byte[7]).ToList();
+                expectedBytes.AddRange(Encoding.ASCII.GetBytes("321"));
+
+                Assert.IsTrue(buffer.SequenceEqual(expectedBytes));
+            }
+        }
+ 
     }
 }
