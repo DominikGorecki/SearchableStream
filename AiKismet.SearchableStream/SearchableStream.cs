@@ -106,32 +106,61 @@ namespace AiKismet.SearchableStream
 
         public long[] IndexOfAllBackwards(byte[] needle, int maxNumberofPositions = 0)
         {
-            throw new NotImplementedException();
+            needle = needle?.Reverse().ToArray() ?? throw new ArgumentNullException(nameof(needle), "The search string cannot be null");
+
+            if (needle.Length == 0) throw new ArgumentOutOfRangeException(nameof(needle), "The search string cannot be empty");
+
+            var findAll = maxNumberofPositions == 0;
+            var foundPositions = new List<long>();
+
+            if (_stream.Position == 0)
+                return foundPositions.ToArray();
+
+            _stream.Position -= 1;
+
+            var matchingBytes = 0;
+            var newPosition = _stream.Position;
+
+            while(_stream.Position >= 0 && newPosition != -1)
+            {
+                _stream.Position = newPosition;
+                int readByte = _stream.ReadByte();
+                if (needle[matchingBytes] == readByte) // Next byte matchhes current read
+                {
+                    if (matchingBytes == needle.Length - 1)
+                    {
+                        matchingBytes = 0;
+                        foundPositions.Add(_stream.Position - 1);
+                        if (!findAll && foundPositions.Count == maxNumberofPositions) break;
+                    }
+                    else 
+                        matchingBytes++;
+                }
+                else // we didn't find the whole "string"--sequence
+                {
+                    matchingBytes = 0;
+                }
+                newPosition =_stream.Position - Math.Min(_stream.Position + 1, 2); 
+            }
+
+            return foundPositions.ToArray();
         }
 
         public override void Flush()
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Flush();
 
         public override int Read(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Read(buffer, offset, count);
 
 
         public override long Seek(long offset, SeekOrigin origin)
             => _stream.Seek(offset, origin);
 
         public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.SetLength(value);
 
         public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Write(buffer, offset, count);
 
         public override void Close()
         {

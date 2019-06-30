@@ -3,26 +3,24 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace SeekableStreamTests
 {
     [TestClass]
-    public class IndexOfAll
+    public class IndexOfAllBackwards 
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void NullNeedle()
         {
-            // Arrange
             var haystackByteArray = Encoding.ASCII.GetBytes("This haystack does not contain a n-e-e-d-l-e");
 
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.IndexOfAll(null);
+                var foundPosition = seekableStream.IndexOfAllBackwards(null);
             }
         }
 
@@ -38,7 +36,7 @@ namespace SeekableStreamTests
             using (var seekableStream = new SearchableStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.IndexOfAll(emptyNeedle);
+                var foundPosition = seekableStream.IndexOfAllBackwards(emptyNeedle);
             }
         }
 
@@ -52,8 +50,9 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(emptyByteArray))
             using(var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
-                var foundPositions = seekableStream.IndexOfAll(needleByteArray);
+                var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
                 // Assert
                 Assert.AreEqual(0, foundPositions.Length);
@@ -70,15 +69,17 @@ namespace SeekableStreamTests
             using(var memStream = new MemoryStream(haystackByteArray))
             using(var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
+
                 // Act
-                var foundPositions = seekableStream.IndexOfAll(needleByteArray);
+                var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
                 // Assert
                 Assert.AreEqual(0, foundPositions.Length);
             }
         }
 
-       [TestMethod]
+        [TestMethod]
         public void SingleOccuranceAtBeginning()
         {
             // Arrange
@@ -88,8 +89,10 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
+
                 // Act
-                var foundPositions = seekableStream.IndexOfAll(needleByteArray);
+                var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
                 // Assert
                 Assert.AreEqual(1, foundPositions.Length);
@@ -107,8 +110,9 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
-                var foundPositions = seekableStream.IndexOfAll(needleByteArray);
+                var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
                 // Assert
                 Assert.AreEqual(1, foundPositions.Length);
@@ -126,14 +130,15 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
-                var foundPositions = seekableStream.IndexOfAll(needleByteArray);
+                var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray);
 
                 // Assert
                 Assert.AreEqual(3, foundPositions.Length);
-                Assert.AreEqual(21, foundPositions[0]);
+                Assert.AreEqual(21, foundPositions[2]);
                 Assert.AreEqual(45, foundPositions[1]);
-                Assert.AreEqual(69, foundPositions[2]);
+                Assert.AreEqual(69, foundPositions[0]);
             }
         }
 
@@ -147,15 +152,15 @@ namespace SeekableStreamTests
             using (var memStream = new MemoryStream(haystackByteArray))
             using (var seekableStream = new SearchableStream(memStream))
             {
+                seekableStream.Seek(0, SeekOrigin.End);
                 // Act
-                var foundPositions = seekableStream.IndexOfAll(needleByteArray, 2);
+                var foundPositions = seekableStream.IndexOfAllBackwards(needleByteArray, 2);
 
                 // Assert
                 Assert.AreEqual(2, foundPositions.Length);
-                Assert.AreEqual(21, foundPositions[0]);
                 Assert.AreEqual(45, foundPositions[1]);
+                Assert.AreEqual(69, foundPositions[0]);
             }
         }
-
     }
 }
