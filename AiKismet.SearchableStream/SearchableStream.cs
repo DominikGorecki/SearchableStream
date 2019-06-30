@@ -110,28 +110,20 @@ namespace AiKismet.SearchableStream
         }
 
         public override void Flush()
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Flush();
 
         public override int Read(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Read(buffer, offset, count);
 
 
         public override long Seek(long offset, SeekOrigin origin)
             => _stream.Seek(offset, origin);
 
         public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.SetLength(value);
 
         public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
+            => _stream.Write(buffer, offset, count);
 
         public override void Close()
         {
