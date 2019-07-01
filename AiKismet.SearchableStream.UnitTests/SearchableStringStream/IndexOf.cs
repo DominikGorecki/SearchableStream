@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SearchableStreamTests
+/// <summary>
+/// Note: Keeping namespace short for Test Explorer
+/// </summary>
+namespace SearchableStringStreamTests 
 {
     [TestClass]
-    public class LastIndexOf
+    public class IndexOfTests 
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -18,10 +21,10 @@ namespace SearchableStreamTests
             var haystackByteArray = Encoding.ASCII.GetBytes("This haystack does not contain a n-e-e-d-l-e");
 
             using (var memStream = new MemoryStream(haystackByteArray))
-            using (var seekableStream = new SearchableStream(memStream))
+            using (var searchableStringString = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(null);
+                var foundPosition = searchableStringString.IndexOf(null);
             }
         }
 
@@ -31,13 +34,13 @@ namespace SearchableStreamTests
         {
             // Arrange
             var haystackByteArray = Encoding.ASCII.GetBytes("This haystack does not contain a n-e-e-d-l-e");
-            var emptyNeedle = new byte[0];
+            var needle = string.Empty;
 
             using (var memStream = new MemoryStream(haystackByteArray))
-            using (var seekableStream = new SearchableStream(memStream))
+            using (var searchableStringStream = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(emptyNeedle);
+                var foundPosition = searchableStringStream.IndexOf(needle);
             }
         }
 
@@ -46,13 +49,13 @@ namespace SearchableStreamTests
         {
             // Arrange
             var emptyByteArray = new byte[0];
-            var needleByteArray = Encoding.ASCII.GetBytes("needle");
+            var needle = "needle";
 
             using (var memStream = new MemoryStream(emptyByteArray))
-            using(var seekableStream = new SearchableStream(memStream))
+            using(var searchableStringStream = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(needleByteArray);
+                var foundPosition = searchableStringStream.IndexOf(needle);
 
                 // Assert
                 Assert.AreEqual(-1, foundPosition);
@@ -64,13 +67,13 @@ namespace SearchableStreamTests
         {
             // Arrange
             var haystackByteArray = Encoding.ASCII.GetBytes("This haystack does not contain a n-e-e-d-l-e");
-            var needleByteArray = Encoding.ASCII.GetBytes("needle");
+            var needle = "needle";
 
             using(var memStream = new MemoryStream(haystackByteArray))
-            using(var seekableStream = new SearchableStream(memStream))
+            using(var searchableStringStream = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(needleByteArray);
+                var foundPosition = searchableStringStream.IndexOf(needle);
 
                 // Assert
                 Assert.AreEqual(-1, foundPosition);
@@ -82,13 +85,13 @@ namespace SearchableStreamTests
         {
             // Arrange
             var haystackByteArray = Encoding.ASCII.GetBytes("needle in a haystack");
-            var needleByteArray = Encoding.ASCII.GetBytes("needle");
+            var needle = "needle";
 
             using (var memStream = new MemoryStream(haystackByteArray))
-            using (var seekableStream = new SearchableStream(memStream))
+            using (var searchableStringStream = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(needleByteArray);
+                var foundPosition = searchableStringStream.IndexOf(needle);
 
                 // Assert
                 Assert.AreEqual(0, foundPosition);
@@ -100,13 +103,13 @@ namespace SearchableStreamTests
         {
             // Arrange
             var haystackByteArray = Encoding.ASCII.GetBytes("haystack with a needle");
-            var needleByteArray = Encoding.ASCII.GetBytes("needle");
+            var needle = "needle";
 
             using (var memStream = new MemoryStream(haystackByteArray))
-            using (var seekableStream = new SearchableStream(memStream))
+            using (var searchableStringStream = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(needleByteArray);
+                var foundPosition = searchableStringStream.IndexOf(needle);
 
                 // Assert
                 Assert.AreEqual(16, foundPosition);
@@ -118,16 +121,52 @@ namespace SearchableStreamTests
         {
             // Arrange
             var haystackByteArray = Encoding.ASCII.GetBytes("This hay stack has a needle here and another needle here and another needle here");
-            var needleByteArray = Encoding.ASCII.GetBytes("needle");
+            var needle = "needle";
 
             using (var memStream = new MemoryStream(haystackByteArray))
-            using (var seekableStream = new SearchableStream(memStream))
+            using (var searchableStringStream = new SearchableStringStream(memStream))
             {
                 // Act
-                var foundPosition = seekableStream.LastIndexOf(needleByteArray);
+                var foundPosition = searchableStringStream.IndexOf(needle);
 
                 // Assert
-                Assert.AreEqual(69, foundPosition);
+                Assert.AreEqual(21, foundPosition);
+            }
+        }
+
+        [TestMethod]
+        public void MultipleOccurance_UTF8()
+        {
+            // Arrange
+            var haystackByteArray = Encoding.UTF8.GetBytes("This hay stack has a needle here and another needle here and another needle here");
+            var needle = "needle";
+
+            using (var memStream = new MemoryStream(haystackByteArray))
+            using (var searchableStringStream = new SearchableStringStream(memStream, Encoding.UTF8))
+            {
+                // Act
+                var foundPosition = searchableStringStream.IndexOf(needle);
+
+                // Assert
+                Assert.AreEqual(21, foundPosition);
+            }
+        }
+
+        [TestMethod]
+        public void MultipleOccurance_Unicode()
+        {
+            // Arrange
+            var haystackByteArray = Encoding.Unicode.GetBytes("This hay stack has a needle here and another needle here and another needle here");
+            var needle = "needle";
+
+            using (var memStream = new MemoryStream(haystackByteArray))
+            using (var searchableStringStream = new SearchableStringStream(memStream, Encoding.Unicode))
+            {
+                // Act
+                var foundPosition = searchableStringStream.IndexOf(needle);
+
+                // Assert
+                Assert.AreEqual(21, foundPosition);
             }
         }
     }

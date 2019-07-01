@@ -8,7 +8,7 @@ using System.Text;
 /// <summary>
 /// Note: Keeping namespace short for Test Explorer
 /// </summary>
-namespace SeekableStreamTests
+namespace SearchableStreamTests
 {
     [TestClass]
     public class IndexOfTests 

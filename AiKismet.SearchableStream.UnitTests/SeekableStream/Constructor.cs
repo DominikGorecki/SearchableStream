@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using AiKismet.SearchableStream;
 
-namespace SeekableStreamTests
+namespace SearchableStreamTests
 {
     [TestClass]
     public class Constructor
