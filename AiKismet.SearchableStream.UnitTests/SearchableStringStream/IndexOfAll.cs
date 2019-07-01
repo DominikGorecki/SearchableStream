@@ -213,9 +213,9 @@ namespace SeekableStringStreamTests
 
                 // Assert
                 Assert.AreEqual(3, foundPositions.Length);
-                Assert.AreEqual(21, foundPositions[0]);
-                Assert.AreEqual(45, foundPositions[1]);
-                Assert.AreEqual(69, foundPositions[2]);
+                Assert.AreEqual(42, foundPositions[0]);
+                Assert.AreEqual(90, foundPositions[1]);
+                Assert.AreEqual(138, foundPositions[2]);
             }
         }
 
@@ -234,8 +234,8 @@ namespace SeekableStringStreamTests
 
                 // Assert
                 Assert.AreEqual(2, foundPositions.Length);
-                Assert.AreEqual(21, foundPositions[0]);
-                Assert.AreEqual(45, foundPositions[1]);
+                Assert.AreEqual(42, foundPositions[0]);
+                Assert.AreEqual(90, foundPositions[1]);
             }
         }
     }
