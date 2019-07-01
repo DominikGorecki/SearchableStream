@@ -64,14 +64,8 @@ namespace AiKismet.SearchableStream
         /// <param name="needle">byte sequence to look for</param>
         /// <returns>position at which the sequence was found</returns>
         public long IndexOf(byte[] needle)
-        {
-            var foundPosition = IndexOfAll(needle, 1);
-            if (foundPosition.Length == 0)
-                return -1;
-
-            return foundPosition.First();
-        }
-
+            => FindSinglePositionUsing(IndexOfAll, needle);
+        
         public long[] IndexOfAll(byte[] needle, int maxNumberOfPositions = 0)
         {
             if (needle == null) throw new ArgumentNullException("Needle cannot be null");
@@ -101,7 +95,15 @@ namespace AiKismet.SearchableStream
 
         public long LastIndexOf(byte[] needle)
         {
-            throw new NotImplementedException();
+            _stream.Seek(0, SeekOrigin.End);
+            return FindSinglePositionUsing(IndexOfAllBackwards, needle);
+        }
+
+        private long FindSinglePositionUsing(Func<byte[], int, long[]> allFunc, byte[] needle)
+        {
+            var foundPositions = allFunc(needle, 1);
+            if (foundPositions.Length == 0) return -1;
+            else return foundPositions.First();
         }
 
         public long[] IndexOfAllBackwards(byte[] needle, int maxNumberofPositions = 0)
