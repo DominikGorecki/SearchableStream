@@ -26,7 +26,8 @@ namespace AiKismet.SearchableStream
 
         public long[] IndexOfAll(string needle, int maxNumberOfPositions = 0)
         {
-            throw new NotImplementedException();
+            var byteNeedle = _encoding.GetBytes(needle);
+            return this.IndexOfAll(byteNeedle, maxNumberOfPositions);
         }
 
         public long[] IndexOfAllBackwards(string needle, int maxNumberOfPositions = 0)
