@@ -39,11 +39,6 @@ namespace AiKismet.SearchableStream
         public long LastIndexOf(string needle)
             => LastIndexOf(_encoding.GetBytes(needle));
 
-        public string ReadLines(int totalLines)
-        {
-            throw new NotImplementedException();
-        }
-
         public string ReadStringInRange(long start, long end)
         {
             if (start < 0) throw new ArgumentOutOfRangeException(nameof(start), "Start must not be negative");
@@ -63,5 +58,40 @@ namespace AiKismet.SearchableStream
 
             return _encoding.GetString(buffer);
         }
+        public string ReadLines(int totalLines)
+        {
+            if (totalLines <= 0) throw new ArgumentOutOfRangeException(nameof(totalLines), "totalLines must be a positive number");
+
+            throw new NotImplementedException();
+        }
+
+        private bool IsEndOfLineByte(out char currentChar)
+        {
+            // There are three legal possibilities for end-of-line. They are, in hex: 0x200A, 0x200D, or 0x0D0A
+            var eol200A = int.Parse("200A", System.Globalization.NumberStyles.HexNumber);
+            var eol200D = int.Parse("200D", System.Globalization.NumberStyles.HexNumber);
+            var eol0D = int.Parse("0D", System.Globalization.NumberStyles.HexNumber); // \r
+            var eol0A = int.Parse("0A", System.Globalization.NumberStyles.HexNumber); // \n
+            var currentByte = new byte[1];
+
+            this.Read(currentByte, 0, 1);
+            var foundEOL = false;
+            if (currentByte[0] == eol0D) // 0D must be followed by 0A
+            {
+                this.Read(currentByte, 0, 1);
+                if (currentByte[0] == eol0A)
+                    foundEOL = true;
+                else
+                    this.Position--;
+            }
+            else if (currentByte[0] == eol200A || currentByte[0] == eol200D || currentByte[0] == eol0A)
+                foundEOL = true;
+
+            currentChar = foundEOL ? '\n' : _encoding.GetChars(currentByte)[0];
+
+            //nextChar = ascii.GetString(currentByte)[0];
+            return foundEOL;
+        }
+
     }
 }
