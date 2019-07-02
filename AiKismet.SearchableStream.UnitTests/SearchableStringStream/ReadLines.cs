@@ -119,7 +119,7 @@ namespace SearchableStringStreamTests
                 sStream.Position = 2;
                 var result = sStream.ReadLines(3);
 
-                Assert.AreEqual("1\r\n2\r\n3\r\n", result);
+                Assert.AreEqual("1\n2\n3\n", result);
             }
         }
 
