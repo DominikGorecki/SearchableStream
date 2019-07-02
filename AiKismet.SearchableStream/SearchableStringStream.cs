@@ -20,8 +20,14 @@ namespace AiKismet.SearchableStream
         }
 
         public long IndexOf(string needle)
+            => FindSinglePositionUsing(IndexOfAll
+                , needle);
+
+        private long FindSinglePositionUsing(Func<string, int, long[]> allFunc, string needle)
         {
-            throw new NotImplementedException();
+            var foundPositions = allFunc(needle, 1);
+            if (foundPositions.Length == 0) return -1;
+            else return foundPositions[0];
         }
 
         public long[] IndexOfAll(string needle, int maxNumberOfPositions = 0)
