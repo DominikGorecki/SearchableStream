@@ -166,7 +166,7 @@ namespace SearchableStringStreamTests
                 var foundPosition = searchableStringStream.IndexOf(needle);
 
                 // Assert
-                Assert.AreEqual(21, foundPosition);
+                Assert.AreEqual(42, foundPosition);
             }
         }
     }
