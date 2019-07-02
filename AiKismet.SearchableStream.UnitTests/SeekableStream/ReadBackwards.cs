@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SeekableStreamTests
+namespace SearchableStreamTests
 {
     [TestClass]
     public class ReadBackwards

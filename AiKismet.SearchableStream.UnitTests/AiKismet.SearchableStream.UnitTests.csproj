@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>SeekableStreamTests</RootNamespace>
+    <RootNamespace>SearchableStreamTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

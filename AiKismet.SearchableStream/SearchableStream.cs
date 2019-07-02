@@ -103,7 +103,7 @@ namespace AiKismet.SearchableStream
         {
             var foundPositions = allFunc(needle, 1);
             if (foundPositions.Length == 0) return -1;
-            else return foundPositions.First();
+            else return foundPositions[0];
         }
 
         public long[] IndexOfAllBackwards(byte[] needle, int maxNumberofPositions = 0)

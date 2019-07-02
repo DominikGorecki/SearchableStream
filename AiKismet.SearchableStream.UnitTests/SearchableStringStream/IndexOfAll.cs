@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SeekableStringStreamTests
+namespace SearchableStringStreamTests
 {
     [TestClass]
     public class IndexOfAll
