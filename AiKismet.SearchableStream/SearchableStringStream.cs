@@ -37,9 +37,7 @@ namespace AiKismet.SearchableStream
             => IndexOfAllBackwards(_encoding.GetBytes(needle), maxNumberOfPositions);
 
         public long LastIndexOf(string needle)
-        {
-            throw new NotImplementedException();
-        }
+            => LastIndexOf(_encoding.GetBytes(needle));
 
         public string ReadLines(int totalLines)
         {
