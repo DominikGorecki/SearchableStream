@@ -62,7 +62,16 @@ namespace AiKismet.SearchableStream
         {
             if (totalLines <= 0) throw new ArgumentOutOfRangeException(nameof(totalLines), "totalLines must be a positive number");
 
-            throw new NotImplementedException();
+            var lineCounter = 0;
+            var foundStringSb = new StringBuilder();
+            while (lineCounter < totalLines && this.Position < this.Length)
+            {
+                if (IsEndOfLineByte(out var currentChar))
+                    lineCounter++;
+
+                foundStringSb.Append(currentChar);
+            }
+            return foundStringSb.ToString();
         }
 
         private bool IsEndOfLineByte(out char currentChar)
