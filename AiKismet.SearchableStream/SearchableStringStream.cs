@@ -31,10 +31,15 @@ namespace AiKismet.SearchableStream
         }
 
         public long[] IndexOfAll(string needle, int maxNumberOfPositions = 0)
-            => IndexOfAll(_encoding.GetBytes(needle), maxNumberOfPositions);
+        {
+            var byteNeedle = _encoding.GetBytes(needle);
+            return this.IndexOfAll(byteNeedle, maxNumberOfPositions);
+        }
 
         public long[] IndexOfAllBackwards(string needle, int maxNumberOfPositions = 0)
-            => IndexOfAllBackwards(_encoding.GetBytes(needle), maxNumberOfPositions);
+        {
+            throw new NotImplementedException();
+        }
 
         public long LastIndexOf(string needle)
         {
