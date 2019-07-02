@@ -54,7 +54,14 @@ namespace AiKismet.SearchableStream
 
             if (end > this.Length) throw new ArgumentOutOfRangeException(nameof(end), "End position cannot be larger than the stream");
 
-            throw new NotImplementedException();
+            var stringLength = end - start + 1; //Include las char
+            var buffer = new byte[stringLength];
+
+            var bufStream = new BufferedStream(this);
+            bufStream.Seek(start, SeekOrigin.Begin);
+            bufStream.Read(buffer);
+
+            return _encoding.GetString(buffer);
         }
     }
 }
