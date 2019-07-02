@@ -46,7 +46,22 @@ namespace AiKismet.SearchableStream
 
         public string ReadStringInRange(long start, long end)
         {
-            throw new NotImplementedException();
+            if (start < 0) throw new ArgumentOutOfRangeException(nameof(start), "Start must not be negative");
+
+            if (end <= start) throw new ArgumentOutOfRangeException(nameof(end), "End of read must be larger than start");
+
+            if (start > this.Length) throw new ArgumentOutOfRangeException(nameof(start), "Start position cannot be larger than the stream");
+
+            if (end > this.Length) throw new ArgumentOutOfRangeException(nameof(end), "End position cannot be larger than the stream");
+
+            var stringLength = end - start + 1; //Include las char
+            var buffer = new byte[stringLength];
+
+            var bufStream = new BufferedStream(this);
+            bufStream.Seek(start, SeekOrigin.Begin);
+            bufStream.Read(buffer);
+
+            return _encoding.GetString(buffer);
         }
     }
 }
