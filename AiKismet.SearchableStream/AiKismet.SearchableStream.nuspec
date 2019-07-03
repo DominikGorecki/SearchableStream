@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AiKismet.SearchableStream</id>
+    <version>0.1.1</version>
+    <authors>Dominik Gorecki</authors>
+    <owners>Dominik Gorecki</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/DominikGorecki/SearchableStream</projectUrl>
+    <iconUrl>https://github.com/tcs1896/SharpChecker/blob/master/SharpChecker/SharpChecker/SharpChecker/Icon.png?raw=true</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Issues with nuget packaging. Fixed in this release.</description>
+    <releaseNotes>First release that includes a workable</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>Stream Search String Find Text Data ByteArray</tags>
+    <packageTypes>
+        <packageType name="Dependency" />
+    </packageTypes>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
